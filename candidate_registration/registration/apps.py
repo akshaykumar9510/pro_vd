@@ -12,5 +12,3 @@ class RegistrationConfig(AppConfig):
         create_required_directories()
     
 
-
-asdjhakdfasdf
