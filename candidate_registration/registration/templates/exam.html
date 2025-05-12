@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Online Exam</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <style>
+            .exam-container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .exam-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .exam-timer {
+                font-size: 18px;
+                font-weight: bold;
+                color: #f5222d;
+                background-color: #fff1f0;
+                padding: 8px 15px;
+                border-radius: 4px;
+                border: 1px solid #ffccc7;
+            }
+            
+            .question {
+                margin-bottom: 30px;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+            }
+            
+            .question h3 {
+                margin-top: 0;
+                color: #333;
+                font-size: 18px;
+            }
+            
+            .options {
+                list-style-type: none;
+                padding: 0;
+            }
+            
+            .options li {
+                margin-bottom: 10px;
+            }
+            
+            .option-label {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            
+            .option-label:hover {
+                border-color: #40a9ff;
+                background-color: #e6f7ff;
+            }
+            
+            .option-input {
+                margin-right: 10px;
+            }
+            
+            .submit-exam {
+                background-color: #52c41a;
+                color: white;
+                padding: 12px 25px;
+                font-size: 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: block;
+                margin: 30px auto;
+                font-weight: bold;
+            }
+            
+            .submit-exam:hover {
+                background-color: #389e0d;
+            }
+            
+            .monitoring-indicator {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: rgba(82, 196, 26, 0.9);
+                color: white;
+                padding: 10px 15px;
+                border-radius: 20px;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                z-index: 1000;
+            }
+            
+            .monitoring-indicator::before {
+                content: '';
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                background-color: #fff;
+                border-radius: 50%;
+                margin-right: 8px;
+                animation: blink 1.5s infinite;
+            }
+            
+            @keyframes blink {
+                0% { opacity: 1; }
+                50% { opacity: 0.4; }
+                100% { opacity: 1; }
+            }
+            
+            /* New styles for webcam monitoring feed */
+            .webcam-monitor-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 220px;
+                height: 165px;
+                background-color: #000;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                z-index: 999;
+                border: 2px solid #52c41a;
+            }
+            
+            .webcam-feed {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .webcam-header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(0,0,0,0.7);
+                color: white;
+                font-size: 12px;
+                padding: 4px 8px;
+                text-align: center;
+            }
+            
+            .webcam-toggle {
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                background-color: rgba(0,0,0,0.5);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 10px;
+                padding: 3px 6px;
+                cursor: pointer;
+            }
+            
+            .webcam-toggle:hover {
+                background-color: rgba(0,0,0,0.8);
+            }
+            
+            .webcam-minimized {
+                width: 80px;
+                height: 60px;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Online Examination</h1>
+        </header>
+
+        <main>
+            <div class="monitoring-indicator">Monitoring Active</div>
+            
+            <!-- Add webcam monitoring feed -->
+            <div class="webcam-monitor-container" id="webcam-container">
+                <div class="webcam-header">Face Monitoring Active</div>
+                <video id="monitoring-webcam" class="webcam-feed" autoplay playsinline></video>
+                <button class="webcam-toggle" id="toggle-webcam">Minimize</button>
+            </div>
+            
+            <section class="exam-container">
+                <div class="exam-header">
+                    <h2>Sample Exam: Candidate {{ user.name }}</h2>
+                    <div class="exam-timer" id="exam-timer">Time Left: 30:00</div>
+                </div>
+                
+                <form id="exam-form">
+                    <div class="question">
+                        <h3>1. What is the capital of France?</h3>
+                        <ul class="options">
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="a" class="option-input"> Paris
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="b" class="option-input"> London
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="c" class="option-input"> Berlin
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="d" class="option-input"> Rome
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>2. Which planet is known as the Red Planet?</h3>
+                        <ul class="options">
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="a" class="option-input"> Venus
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="b" class="option-input"> Mars
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="c" class="option-input"> Jupiter
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="d" class="option-input"> Saturn
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>3. What is the chemical symbol for gold?</h3>
+                        <ul class="options">
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="a" class="option-input"> Go
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="b" class="option-input"> Gd
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="c" class="option-input"> Au
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="d" class="option-input"> Ag
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button type="submit" class="submit-exam">Submit Exam</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Candidate Registration System. All rights reserved.</p>
+        </footer>
+    </div>
+
+    {% load static %}
+    <script src="{% static 'js/monitor.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up exam timer
+            let timeLeft = 30 * 60; // 30 minutes in seconds
+            const timerElement = document.getElementById('exam-timer');
+            
+            const timerInterval = setInterval(function() {
+                timeLeft--;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Time is up! Your exam will be submitted automatically.');
+                    document.getElementById('exam-form').submit();
+                }
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Warning when 5 minutes left
+                if (timeLeft === 300) {
+                    timerElement.style.backgroundColor = '#fff2e8';
+                    timerElement.style.borderColor = '#ffbb96';
+                }
+                
+                // Urgent warning when 1 minute left
+                if (timeLeft === 60) {
+                    timerElement.style.backgroundColor = '#fff1f0';
+                    timerElement.style.borderColor = '#ffa39e';
+                    timerElement.style.animation = 'blink 1s infinite';
+                }
+            }, 1000);
+            
+            // Handle form submission
+            document.getElementById('exam-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Stop the monitoring
+                if (window.examMonitor) {
+                    window.examMonitor.stop();
+                }
+                
+                alert('Exam submitted successfully!');
+                window.location.href = '/';
+            });
+            
+            // Set up webcam monitoring feed
+            const webcamContainer = document.getElementById('webcam-container');
+            const monitoringWebcam = document.getElementById('monitoring-webcam');
+            const toggleButton = document.getElementById('toggle-webcam');
+            
+            // Initialize webcam feed for monitoring visualization
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(mediaStream) {
+                    monitoringWebcam.srcObject = mediaStream;
+                    monitoringWebcam.play();
+                })
+                .catch(function(error) {
+                    console.error('Error accessing webcam for monitoring display:', error);
+                });
+            
+            // Toggle webcam size
+            toggleButton.addEventListener('click', function() {
+                if (webcamContainer.classList.contains('webcam-minimized')) {
+                    webcamContainer.classList.remove('webcam-minimized');
+                    toggleButton.textContent = 'Minimize';
+                } else {
+                    webcamContainer.classList.add('webcam-minimized');
+                    toggleButton.textContent = 'Expand';
+                }
+            });
+            
+            // Initialize exam monitoring if it hasn't been already
+            // This ensures monitoring continues after being redirected from the monitor page
+            if (window.examMonitor && !window.examMonitor.monitorActive) {
+                window.examMonitor.init("{{ user.id }}");
+                console.log("Exam monitoring initialized for user {{ user.id }}");
+            }
+        });
+    </script>
+</body>
+</html>

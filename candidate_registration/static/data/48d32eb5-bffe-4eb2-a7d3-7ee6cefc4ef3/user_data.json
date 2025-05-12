@@ -1,0 +1,15 @@
+{
+    "id": "48d32eb5-bffe-4eb2-a7d3-7ee6cefc4ef3",
+    "name": "ak123",
+    "email": "ak123@gmail.com",
+    "phone": "438782645",
+    "education": "Diploma",
+    "registration_time": 1745954115.601744,
+    "video_path": "static\\data\\48d32eb5-bffe-4eb2-a7d3-7ee6cefc4ef3\\video.webm",
+    "frames_dir": "static\\data\\48d32eb5-bffe-4eb2-a7d3-7ee6cefc4ef3\\frames",
+    "model_path": "static\\models\\user_48d32eb5-bffe-4eb2-a7d3-7ee6cefc4ef3.pt",
+    "registration_status": "completed_successfully",
+    "registration_complete": true,
+    "_id": "681125432d48c688db82a559",
+    "registration_completed_at": 1745954166.0362084
+}

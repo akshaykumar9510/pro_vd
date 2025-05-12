@@ -1,0 +1,14 @@
+{
+    "id": "f0ffcd28-d2a8-4194-b7b5-715b710cb7f3",
+    "name": "SAI",
+    "email": "SAI@gmail.com",
+    "phone": "2367892345",
+    "education": "Diploma",
+    "registration_time": 1745321220.4782043,
+    "video_path": "static\\data\\f0ffcd28-d2a8-4194-b7b5-715b710cb7f3\\video.webm",
+    "frames_dir": "static\\data\\f0ffcd28-d2a8-4194-b7b5-715b710cb7f3\\frames",
+    "model_path": "static\\models\\user_f0ffcd28-d2a8-4194-b7b5-715b710cb7f3.pt",
+    "registration_status": "initiated",
+    "registration_complete": false,
+    "_id": "68077d0472765645210c1c29"
+}

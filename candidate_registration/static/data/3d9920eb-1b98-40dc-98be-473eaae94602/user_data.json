@@ -1,0 +1,14 @@
+{
+    "id": "3d9920eb-1b98-40dc-98be-473eaae94602",
+    "name": "bhavya",
+    "email": "bhavya@gmail.com",
+    "phone": "34587294685",
+    "education": "Master's Degree",
+    "registration_time": 1745317794.149185,
+    "video_path": "static\\data\\3d9920eb-1b98-40dc-98be-473eaae94602\\video.webm",
+    "frames_dir": "static\\data\\3d9920eb-1b98-40dc-98be-473eaae94602\\frames",
+    "model_path": "static\\models\\user_3d9920eb-1b98-40dc-98be-473eaae94602.pt",
+    "registration_status": "initiated",
+    "registration_complete": false,
+    "_id": "68076fa2388ca6f5e154ecc4"
+}

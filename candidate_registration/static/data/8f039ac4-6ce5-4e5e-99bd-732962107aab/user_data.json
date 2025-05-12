@@ -1,0 +1,14 @@
+{
+    "id": "8f039ac4-6ce5-4e5e-99bd-732962107aab",
+    "name": "akshaykumar",
+    "email": "akshaykumar@gmail.com",
+    "phone": "7569576231",
+    "education": "B.Tech",
+    "registration_time": 1745312839.0919697,
+    "video_path": "static\\data\\8f039ac4-6ce5-4e5e-99bd-732962107aab\\video.webm",
+    "frames_dir": "static\\data\\8f039ac4-6ce5-4e5e-99bd-732962107aab\\frames",
+    "model_path": "static\\models\\user_8f039ac4-6ce5-4e5e-99bd-732962107aab.pt",
+    "registration_status": "initiated",
+    "registration_complete": false,
+    "_id": "68075c47bb96ff7d60d2ad9d"
+}

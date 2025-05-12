@@ -1,0 +1,4 @@
+User ID: 7c5a09e5-9e46-410f-b25f-de62ae8f4ba0
+Registration time: Tue Apr 22 17:12:06 2025
+Frames: 30
+Note: Using simplified face recognition approach

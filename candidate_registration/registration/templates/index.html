@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Candidate Registration System</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Candidate Registration System</h1>
+        </header>
+
+        <main>
+            <section id="registration-section">
+                <h2>User Registration</h2>
+                <form id="registration-form">
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="education">Education Qualification:</label>
+                        <select id="education" name="education" required>
+                            <option value="">-- Select Qualification --</option>
+                            <option value="B.Tech">B.Tech</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Bachelor's Degree">Bachelor's Degree</option>
+                            <option value="Master's Degree">Master's Degree</option>
+                            <option value="Ph.D.">Ph.D.</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Continue to Video Capture</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="video-section" class="hidden">
+                <h2>Video Capture</h2>
+                <p class="instructions">Please position your face within the green rectangle and stay still for the 30-second recording.</p>
+                <p class="instructions">Ensure that only a single individual is present during the capture process. If multiple individuals are detected, the system will not proceed with the capture. </p>
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <div id="roi-indicator"></div>
+                    <div id="countdown"></div>
+                </div>
+                
+                <div class="capture-controls">
+                    <button id="start-capture" class="btn-primary">Start Recording</button>
+                    <button id="cancel-capture" class="btn-secondary">Cancel</button>
+                </div>
+                
+                <div id="recording-progress" class="progress-bar hidden">
+                    <div class="progress-fill"></div>
+                    <div class="progress-text">Recording: <span id="recording-time">0</span>/30 seconds</div>
+                </div>
+            </section>
+
+            <section id="processing-section" class="hidden">
+                <h2>Processing Your Registration</h2>
+                <div class="processing-info">
+                    <div class="spinner"></div>
+                    <p>Please wait while we process your video and complete your registration...</p>
+                </div>
+                
+                <div id="processing-progress" class="progress-bar">
+                    <div class="progress-fill"></div>
+                    <div class="progress-text">Processing: <span id="processing-step">Frame Extraction</span></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Candidate Registration System. All rights reserved.</p>
+        </footer>
+    </div>
+
+    {% load static %}
+    <script src="{% static 'js/webcam.js' %}"></script>
+</body>
+</html>

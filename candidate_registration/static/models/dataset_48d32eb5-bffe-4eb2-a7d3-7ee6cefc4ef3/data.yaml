@@ -1,0 +1,5 @@
+names:
+  0: user_48d32eb5-bffe-4eb2-a7d3-7ee6cefc4ef3
+path: static\models\dataset_48d32eb5-bffe-4eb2-a7d3-7ee6cefc4ef3
+train: train/images
+val: val/images

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registration Confirmation</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Registration Successful</h1>
+        </header>
+
+        <main>
+            <section id="confirmation-section">
+                <div class="confirmation-message">
+                    <div class="success-icon">✓</div>
+                    <h2>Thank You, {{ user.name }}!</h2>
+                    <p>Your registration has been successfully completed.</p>
+                </div>
+                
+                <div class="user-details">
+                    <h3>Registration Details</h3>
+                    <ul>
+                        <li><strong>Name:</strong> {{ user.name }}</li>
+                        <li><strong>Email:</strong> {{ user.email }}</li>
+                        <li><strong>Registration ID:</strong> {{ user.id }}</li>
+                        <li><strong>Status:</strong> {{ user.status }}</li>
+                    </ul>
+                </div>
+                
+                <div class="next-steps">
+                    <h3>What's Next?</h3>
+                    <p>Your face recognition model has been trained. You can now set up the exam monitoring system.</p>
+                    <div class="button-group">
+                        <a href="/monitor/{{ user.id }}" class="btn-primary">Start Exam Monitoring</a>
+                        <a href="/" class="btn-secondary">Return to Home</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Candidate Registration System. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

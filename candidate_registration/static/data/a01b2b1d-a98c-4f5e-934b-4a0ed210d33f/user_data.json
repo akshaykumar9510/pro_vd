@@ -1,0 +1,14 @@
+{
+    "id": "a01b2b1d-a98c-4f5e-934b-4a0ed210d33f",
+    "name": "Rayala Akshay kumar ",
+    "email": "Rayalaakshaykumar@gimal.com",
+    "phone": "1234567890",
+    "education": "Master's Degree",
+    "registration_time": 1745319224.0259426,
+    "video_path": "static\\data\\a01b2b1d-a98c-4f5e-934b-4a0ed210d33f\\video.webm",
+    "frames_dir": "static\\data\\a01b2b1d-a98c-4f5e-934b-4a0ed210d33f\\frames",
+    "model_path": "static\\models\\user_a01b2b1d-a98c-4f5e-934b-4a0ed210d33f.pt",
+    "registration_status": "initiated",
+    "registration_complete": false,
+    "_id": "680775389eebcadcb92c71db"
+}
